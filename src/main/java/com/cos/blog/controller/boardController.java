@@ -12,6 +12,7 @@ public class boardController {
 		public String index() {
 			
 			// application.yml 파일에 설정한 위치로 파일을 찾아감
+			// test
 			return "index";
 		}
 		
