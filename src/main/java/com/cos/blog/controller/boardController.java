@@ -13,6 +13,7 @@ public class boardController {
 			
 			// application.yml 파일에 설정한 위치로 파일을 찾아감
 			// test
+			// test2
 			return "index";
 		}
 		
