@@ -6,7 +6,7 @@ server:
   port: 8088
   servlet:
 #    context-path: /
-    context-path: /blog
+    context-path: /
     #context-path 는 http://localhost:8088/blog/http/lombok 이런식으로 사용하도록 해줌
     # 기본값은  http://localhost:8088/http/lombok 이것이다
 spring:
@@ -22,8 +22,11 @@ spring:
     username: cos
     password: cos1234
     
-  jpa:
+  jpa:   
     open-in-view: true
+#   open-in-view 을 true 로 할경우 lazy로드가 가능함
+#   lazy 로딩이란 request를 할경우 영속성컨텍스트를  controller단 이전에 생성을 해주며 response전 직전에 영속성컨텍스트를 삭제를 해준다
+#   lazy로딩을 사용할경우 lazy로드로 가져온 데이터는 controller에서 select는 가능하지만 update는 불가능하다.
     hibernate:
       ddl-auto: update
 #     ddl-auto의 타입을 먼저 확인해야함. create는 테이블을 생성한다는 뜻.

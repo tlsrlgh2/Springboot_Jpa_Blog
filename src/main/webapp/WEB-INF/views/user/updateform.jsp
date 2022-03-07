@@ -14,7 +14,6 @@
 		<div class="form-group">
 			<label for="email">email address:</label> <input type="email" class="form-control" placeholder="Enter email" id="email">
 		</div>
-		
 	</form>
 
 	<button id="btn-save" class="btn btn-primary">회원 가입</button>
