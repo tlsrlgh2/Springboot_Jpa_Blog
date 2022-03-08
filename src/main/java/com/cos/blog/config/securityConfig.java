@@ -3,6 +3,7 @@ package com.cos.blog.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,10 +18,18 @@ import com.cos.blog.config.auth.principalDetailService;
 @EnableWebSecurity	// Security 필터가 등록이 된다
 @EnableGlobalMethodSecurity(prePostEnabled = true) // 특정 주소로 접근을하면 권한 및 인증을 미리 체크하겠다는 뜻. 위 셋 어노테이션은 시큐리티 사용시 셋트이다.
 public class securityConfig extends WebSecurityConfigurerAdapter{
-
+		
 	@Autowired
 	private principalDetailService principalDetailService;
 	
+	
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		
+		return super.authenticationManagerBean();
+	}
+
 	// IOC가 됨
 	@Bean
 	public BCryptPasswordEncoder encodePWD() {

@@ -17,6 +17,8 @@ import lombok.Getter;
 @Data
 public class principalDetail implements UserDetails{
 	
+	private static final long serialVersionUID = 3318549922418797863L;
+	
 	private user user;	// 컴포지션( 객체를 품고있다) 
 
 	public principalDetail(user user) {

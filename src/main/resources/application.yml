@@ -21,6 +21,9 @@ spring:
     url: jdbc:mysql://localhost:3306/blog?serverTimezone=Asia/Seoul
     username: cos
     password: cos1234
+  devtools:
+    livereload:
+      enabled: true
     
   jpa:   
     open-in-view: true

@@ -5,6 +5,10 @@ package com.cos.blog.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +27,8 @@ public class userService {
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
+	
+	
 	
 	// @Transactional 은 CRUD를 처리할떄 정합성을 위해 꼭 붙여준다.
 	@Transactional	// 여러개의 서비스를 하나의 트랜젝션으로 모으기 위한 어노테이션

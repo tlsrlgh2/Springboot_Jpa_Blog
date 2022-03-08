@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,6 +31,8 @@ public class userApiController {
 	@Autowired
 	private userService userservice;
 	
+	@Autowired
+	private AuthenticationManager authenticationManager;
 	
 // 스프링 시큐리티 사용전
 //	@Autowired
@@ -50,6 +53,11 @@ public class userApiController {
 		// 이부분에서 트랜잭션이 종료되기때문에 DB에 값은 변경되지만
 		// 세션값은 변경되지 않은 상태기 때문에
 		
+		
+		// 세션 등록 코드 (DB가 변경된 후 세션등록을 해야한다)
+		
+		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 		
 		return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
