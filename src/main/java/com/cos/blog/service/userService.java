@@ -2,6 +2,8 @@ package com.cos.blog.service;
 
 
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -48,5 +50,25 @@ public class userService {
 //	public user userlogin(user user) {
 //		return userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
 //	}
+
+	@Transactional
+	public void usermodify(user user) {
+		System.out.println("유저 modify 실행");
+		// 수정시에는 영속성 컨텍스트 user 오브젝트를 영속화를 시키고, 영속화된 user 오브젝트를 수정.
+		// select를 해서 user오브젝트를 DB로부터 가져오는 이유는 영속화를 하기 위해서
+		// 영속화를 하게되면 영속화된 오브젝트를 변경하면 자동으로 DB에 update문을 날려줌.
+		user persistance = userRepository.findById(user.getId()).orElseThrow(()->{
+			return new IllegalArgumentException("회원 찾기 실패");
+		});
+		String rawPassword = user.getPassword();
+		System.out.println(rawPassword);
+		String encPassword = encoder.encode(rawPassword);
+		System.out.println(encPassword);
+		persistance.setPassword(encPassword);
+		persistance.setEmail(user.getEmail());
+		// 회원수정 함수 종료시 = 서비스 종료 = 트랜잭션 종료 = commit이 자동으로 됩니다
+		// 영속화된 persistance 객체의 변화가 감지되면 더치체킹이 되어 update문을 날려줌
+		
+	}
 	
 }

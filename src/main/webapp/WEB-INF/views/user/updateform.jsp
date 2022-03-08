@@ -4,19 +4,23 @@
 
 
 <div class="container">
-	<form action="/user/join">
+	<form>
+		<input type="hidden" id="id" value="${principal.user.id}">
 		<div class="form-group">
-			<label for="username">username :</label> <input type="text" class="form-control" placeholder="Enter username" id="username">
+			<label for="username">username :</label> 
+			<input value="${principal.user.username}" type="text" class="form-control" placeholder="Enter username" id="username" readonly="readonly">
 		</div>
 		<div class="form-group">
-			<label for="password">password:</label> <input type="password" class="form-control" placeholder="Enter password" id="password">
+			<label for="password">password:</label> 
+			<input type="password" class="form-control" placeholder="Enter password" id="password">
 		</div>
 		<div class="form-group">
-			<label for="email">email address:</label> <input type="email" class="form-control" placeholder="Enter email" id="email">
+			<label for="email">email address:</label>
+			 <input value="${principal.user.email}" type="email" class="form-control" placeholder="Enter email" id="email">
 		</div>
 	</form>
 
-	<button id="btn-save" class="btn btn-primary">회원 가입</button>
+	<button id="btn-update" class="btn btn-primary">회원 수정 완료</button>
 </div>
 
 

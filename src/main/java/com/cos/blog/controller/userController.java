@@ -1,12 +1,18 @@
 package com.cos.blog.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.cos.blog.config.auth.principalDetail;
+import com.cos.blog.dto.ResponseDto;
 import com.cos.blog.model.user;
+import com.cos.blog.service.userService;
 
 // 인증이 안된 사용자들이 출입할수 있는 경로를 /auth로 지정
 // 그냥 주소가 / 이면 index.jsp 허용
@@ -16,6 +22,9 @@ import com.cos.blog.model.user;
 //@RequestMapping("blog")
 public class userController {
 
+	private userService userService;
+	
+	
 	@GetMapping("/auth/joinform")
 	public String joinform() {
 		
@@ -33,5 +42,7 @@ public class userController {
 		
 		return "user/updateform";
 	}
+	
+	
 	
 }
