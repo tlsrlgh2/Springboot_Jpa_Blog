@@ -49,3 +49,7 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
+
+cos:
+   key: cos1234
+#   cos key 는 aouth로그인을 하는 사용자들의 비밀번호이므로 실제 서버 사용시 절대 노출되면 안됨. github에서도 yml파일을 이그노어 시켜야함

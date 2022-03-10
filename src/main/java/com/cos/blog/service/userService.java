@@ -28,7 +28,15 @@ public class userService {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	
-	
+	@Transactional(readOnly = true)
+	public user finduser(String username) {
+															//orElseGet()은 만약 회원을 찾았는데 없다면 빈 객체를 호출해라 라는 뜻
+		user user = userRepository.findByUsername(username).orElseGet(()->{
+			return new user();
+		});
+		
+		return user;
+	}
 	
 	// @Transactional 은 CRUD를 처리할떄 정합성을 위해 꼭 붙여준다.
 	@Transactional	// 여러개의 서비스를 하나의 트랜젝션으로 모으기 위한 어노테이션
@@ -66,12 +74,15 @@ public class userService {
 		user persistance = userRepository.findById(user.getId()).orElseThrow(()->{
 			return new IllegalArgumentException("회원 찾기 실패");
 		});
-		String rawPassword = user.getPassword();
-		System.out.println(rawPassword);
-		String encPassword = encoder.encode(rawPassword);
-		System.out.println(encPassword);
-		persistance.setPassword(encPassword);
-		persistance.setEmail(user.getEmail());
+		
+		// validate 체크 => oauth에 값이 없으면 수정 가능
+		if(persistance.getOauth() == null || persistance.getOauth().equals("")) {
+			String rawPassword = user.getPassword();
+			String encPassword = encoder.encode(rawPassword);
+			persistance.setPassword(encPassword);
+			persistance.setEmail(user.getEmail());
+		}
+		
 		// 회원수정 함수 종료시 = 서비스 종료 = 트랜잭션 종료 = commit이 자동으로 됩니다
 		// 영속화된 persistance 객체의 변화가 감지되면 더치체킹이 되어 update문을 날려줌
 		

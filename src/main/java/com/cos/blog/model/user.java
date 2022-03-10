@@ -38,7 +38,7 @@ public class user {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY사용시 프로젝트에서 연결된  DB의 넘버링 전략을 따라간다는 뜻.											// 오라클 사용시 시퀀스 를 사용, mysql사용시 auto_increment를 따라감
 	private int id; // 오라클에서는 시퀀스 로 부르고, mysql에서는 auto_increment로 부름
 	
-	@Column(nullable=false,length = 30, unique = true) // 널값이 될수 없다는 뜻
+	@Column(nullable=false,length = 100, unique = true) // 널값이 될수 없다는 뜻
 	private String username; // 아이디
 	
 	@Column(nullable=false,length = 100) // 123456 => 해쉬(암호화) 하기위해 넉넉하게 잡음.
@@ -51,6 +51,9 @@ public class user {
 	// db는 RoleType이라는게 어벗어서 
 	@Enumerated(EnumType.STRING)
 	private RoleType role; // String 보다 Enum을 쓰는게 좋다   //Enum을 사용시 admin, user. manager 이런식으로 3가지중 하나의 권한을 부여할수있다
+	
+	private String oauth;	// 카카오 로그인은 kaka, 구글 로그인은 google
+	
 	
 	@CreationTimestamp // 시간이 자동으로 입려됨  *오라클일경우 sysdate()를 자동으로 사용 , mysql일경우 now()를 자동으로 사용
 	private Timestamp createDate;
