@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.cos.blog.dto.replySaveRequsetDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,4 +43,18 @@ public class Reply {
 	
 	@CreationTimestamp
 	private Timestamp createdate;
+	
+	public void update(user user,board board, String content) {
+		setUser(user);
+		setBoard(board);
+		setContent(content);
+	}
+
+	@Override
+	public String toString() {
+		return "Reply [id=" + id + ", content=" + content + ", board=" + board + ", user=" + user + ", createdate="
+				+ createdate + "]";
+	}
+	
+	
 }

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.blog.config.auth.principalDetail;
 import com.cos.blog.dto.ResponseDto;
+import com.cos.blog.dto.replySaveRequsetDto;
+import com.cos.blog.model.Reply;
 import com.cos.blog.model.RoleType;
 import com.cos.blog.model.board;
 import com.cos.blog.model.user;
@@ -49,6 +51,27 @@ public class boardApiController {
 	public ResponseDto<Integer> update(@PathVariable int id, @RequestBody board board) throws Exception {
 		boardService.modify(id,board);
 
+		return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
+	}
+	
+	// 댓글쓰기
+	@PostMapping("/api/board/{boardid}/reply")
+	public ResponseDto<Integer> replysave(@RequestBody replySaveRequsetDto replyrequestDto) throws Exception {
+		// 데이터 받을 떄 컨트롤러에서 dto를 만들어서 받는게 좋다.
+		// dto 사용하지 않은 이유는 
+		System.out.println("userid get 포인트"+replyrequestDto.getUserid() );
+		
+		
+		boardService.replywrite(replyrequestDto);
+		
+		return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
+	}
+	
+	@DeleteMapping("/api/board/{boardid}/reply/{replyid}")
+	public ResponseDto<Integer> replydelete(@PathVariable int replyid){
+		
+		boardService.board_reply_delete(replyid);
+		
 		return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
 	}
 	

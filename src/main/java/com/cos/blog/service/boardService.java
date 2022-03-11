@@ -12,17 +12,41 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cos.blog.dto.replySaveRequsetDto;
+import com.cos.blog.model.Reply;
 import com.cos.blog.model.RoleType;
 import com.cos.blog.model.board;
 import com.cos.blog.model.user;
 import com.cos.blog.repository.boardRepository;
+import com.cos.blog.repository.replyRepository;
 import com.cos.blog.repository.userRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service 
+@RequiredArgsConstructor
 public class boardService {
 	
-	@Autowired
-	private boardRepository boardRepository;
+	private final boardRepository boardRepository;
+	private final replyRepository replyrepository;
+	
+	
+//	Autowired의 원리. 
+	
+//	public boardService(boardRepository bRepo, replyRepository rRepo) {
+//		this.boardRepository = bRepo;
+//		this.replyrepository = rRepo;
+//	}
+	
+//	
+//	@Autowired
+//	private  boardRepository boardRepository;
+//	
+//	@Autowired
+//	private replyRepository replyrepository;
+//	
+//	@Autowired
+//	private userRepository userrepository;
 	
 	@Transactional	
 	public void writesave(board board,user user) {	// title, content
@@ -48,8 +72,6 @@ public class boardService {
 		} else {
 			throw new Exception("글상세보기 실패 : 아이디를 찾을수없습니다");
 		}
-		
-		
 	}
 	
 	@Transactional
@@ -71,5 +93,45 @@ public class boardService {
 			throw new Exception("글 찾기 실패 : 아이디를 찾을수없습니다");
 		}
 		
+	}
+
+	@Transactional
+	public void replywrite(replySaveRequsetDto replysaverequestDto) throws Exception{
+//		board board = null;
+//		user user = null;
+		
+//		// 영속화 방법
+//		Optional<board> boardchk = boardRepository.findById(replysaverequestDto.getBoardid());
+//		if(boardchk.isPresent()) {
+//			board = boardchk.get();
+//		}else {
+//			throw new Exception("댓글 쓰기 실패 : 게시글 id를 찾을수 없습니다");
+//		}
+//		// 영속화 방법
+//		Optional<user> userchk = userrepository.findById(replysaverequestDto.getUserid());
+//		if(userchk.isPresent()) {
+//			user = userchk.get();
+//		}else {
+//			throw new Exception("댓글 쓰기 실패 : 유저 id를 찾을수 없습니다");
+//		}
+		
+////		Reply reply = Reply.builder()
+////					.user(user)
+////					.board(board)
+////					.content(replysaverequestDto.getContent())
+////					.build();
+		
+// 		윗 방법도 있고  아래처럼 DTO 생성해서 만드는 망법도 있다
+//		Reply reply = new Reply();
+//		reply.update(user, board, replysaverequestDto.getContent());
+		
+		
+		// 영속화를 생략하는 방법이다
+		int result = replyrepository.mSave(replysaverequestDto.getUserid(),replysaverequestDto.getBoardid(),replysaverequestDto.getContent());
+		System.out.println(result); // 오브젝트를 출력하게되면 자동으로 toString() 이 호출됨.
+	}
+
+	public void board_reply_delete(int replyid) {
+		replyrepository.deleteById(replyid);
 	}
 }

@@ -18,7 +18,7 @@ public class globalExecptionHandler {
 	
 	@ExceptionHandler(value=Exception.class)
 	public ResponseDto<String> handleException(Exception e) {
-		return new ResponseDto<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage());
+		return new ResponseDto<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage()); // 에러발생시 500데이터 날아옴
 //		return "<h1>"+e.getMessage()+"</h1>";
 	}
 }

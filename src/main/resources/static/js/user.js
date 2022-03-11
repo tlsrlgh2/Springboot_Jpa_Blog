@@ -37,9 +37,15 @@ let index = {
 				dataType: "json",	// 요청을 했을경우 응답이 왔을때 기본적으로 모든것을 문자열로 받는데
 								// 문자열의 타입이 json이라면 javascript로 변경을 해준다
 				success: function(res){
-					alert("회원가입이 완료되었습니다");
-//					console.log(res);
-					location="/";
+					if(res.status === 500) {	// 중복된 아이디 처리
+						alert("회원가입이 실패하었습니다");
+					}else {
+						alert("회원가입이 완료되었습니다");
+//						console.log(res);
+						location="/";
+					}
+					
+					
 				},
 				error:function(error){
 					alert(JSON.stringify(error));

@@ -13,6 +13,10 @@ let index = {
 				this.update();
 				console.log("update함수 클릭 ..");
 			});
+			$("#btn-reply-save").on("click", ()=>{	
+				this.replysave();
+				console.log("replysave함수 클릭 ..");
+			});
 		},
 		
 		save: function() {
@@ -83,6 +87,58 @@ let index = {
 					location="/";
 				},
 				error: function (error) {
+					alert(JSON.stringify(error));
+				}
+			});
+		},
+		replysave: function() {
+			console.log("replysave함수 ...");
+			let data = {
+				userid: $("#userid").val(),
+				boardid: $("#boardid").val(),
+				content: $("#reply-content").val()	
+			};
+			
+			console.log(data);
+			
+			$.ajax({
+				
+				type:"post",
+				url:`/api/board/${data.boardid}/reply`,
+				data:JSON.stringify(data),
+				contentType:"application/json; charset=utf-8",
+				dataType: "json",
+								
+				success: function(res){
+					alert("댓글 작성이 완료되었습니다");
+					location=`/board/${data.boardid}`;
+				},
+				error:function(error){
+					alert(JSON.stringify(error));
+				}
+			});
+		},
+		replydelete: function(boardid,replyid) {
+			console.log("replysave함수 ...");
+			let data = {
+				userid: $("#userid").val(),
+				boardid: $("#boardid").val(),
+				content: $("#reply-content").val()	
+			};
+			
+			console.log(data);
+			
+			$.ajax({
+				
+				type:"delete",
+				url: `/api/board/${boardid}/reply/${replyid}`,
+				dataType: "json",
+								
+				success: function(res){
+					alert("댓글 삭제 성공");
+					location=`/board/${data.boardid}`;
+				},
+				error:function(error){
 					alert(JSON.stringify(error));
 				}
 			});
