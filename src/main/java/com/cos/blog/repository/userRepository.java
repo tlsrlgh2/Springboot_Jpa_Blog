@@ -16,7 +16,7 @@ public interface userRepository extends JpaRepository<user, Integer> {
 	//	select * from user where username = ?1 and password = ?2; 라는 쿼리문이 동작함
 	// 스프링 시큐리티 사용전 코드
 	//	user findByUsernameAndPassword(String username,String password);
-		
+	
 		
 	//	윗 코드와 동일한 동작을 하는코드
 	//	@Query(value="select * from user where username = ?1 and password = ?2",nativeQuery = true)
